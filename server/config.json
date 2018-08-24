@@ -25,5 +25,14 @@
                 "pass": "123d456d789d"
             }
         }
+    },
+    "SESSION_FLASH": {
+        "key": "koa:flash",
+        "overwrite": true,
+        "httpOnly": true,
+        "signed": true,
+        "rolling": false,
+        "renew": false,
+        "maxAge": 60000
     }
 }

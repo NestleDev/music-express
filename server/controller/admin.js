@@ -2,25 +2,25 @@ const uploadas = require('../helpers/upload')
 const db = require('../model/db')
 
 module.exports = {
-    getAdmin: (req, res) => {
-        if (!req.session.auth) {
-            return res.redirect('/login')
+    getAdmin: async (ctx, next) => {
+        if (!ctx.session.auth) {
+            return ctx.redirect('/login')
         }
 
         const dataFlash = {
-            msgskill: req.flash('info')[0],
-            msgfile: req.flash('err')[0] || req.flash('data')[0]
+            msgskill: ctx.flash('info')[0],
+            msgfile: ctx.flash('err')[0] || ctx.flash('data')[0]
         }
 
-        res.render('pages/admin', dataFlash)
+        ctx.render('pages/admin', dataFlash)
     },
-    updateSkills: (req, res) => {
-        const data = req.body
+    updateSkills: async (ctx, next) => {
+        const data = ctx.request.body
 
         if (!data.age && !data.concerts && !data.cities && !data.years) {
-            req.flash('info', 'Заполните нужные поля!')
+            ctx.flash('info', 'Заполните нужные поля!')
 
-            return res.redirect('/admin')
+            return ctx.redirect('/admin')
         }
 
         Object.keys(data).forEach((item, i) => {
@@ -31,19 +31,19 @@ module.exports = {
             }
         });
 
-        req.flash('info', 'Данные обновлены! :)')
-        res.redirect('/admin')
+        ctx.flash('info', 'Данные обновлены! :)')
+        ctx.redirect('/admin')
     },
-    upload: (req, res) => {
-        uploadas(req, res, (err, msg) => {
-            if (err) {
-                req.flash('err', err.msg)
+    upload: async (ctx, next) => {
+        const status = uploadas(ctx)
 
-                return res.redirect('/admin')
-            }
+        if (status.error) {
+            ctx.flash('err', status.mes)
 
-            req.flash('data', msg)
-            res.redirect('/admin')
-        });
+            return ctx.redirect('/admin')
+        }
+
+        ctx.flash('data', status.mes)
+        ctx.redirect('/admin')
     }
 }

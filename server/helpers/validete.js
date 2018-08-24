@@ -7,5 +7,5 @@ module.exports = (fields, files) => {
         return { mes: 'Укажите цену', error: true }
     }
 
-    return { mes: 'Продукт успешно загружен', err: false }
+    return { mes: 'Продукт успешно загружен', error: false }
 }

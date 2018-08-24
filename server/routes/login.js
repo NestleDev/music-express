@@ -1,9 +1,10 @@
-const express = require('express')
+const Router = require('koa-router');
+const body = require('koa-body');
+const router = new Router()
+
 const controller = require('../controller/login')
 
-const router = express.Router()
-
-router.get('/', controller.getLogin)
-router.post('/', controller.auth)
+router.get('/login', controller.getLogin)
+router.post('/login', body(), controller.auth)
 
 module.exports = router

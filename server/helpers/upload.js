@@ -1,43 +1,37 @@
-const formidable = require('formidable')
 const fs = require('fs')
 const path = require('path')
 const validete = require('../helpers/validete')
 const db = require('../model/db')
 const config = require('../config.json')
 
-module.exports = (req, res, cb) => {
-    const form = new formidable.IncomingForm()
+module.exports = (ctx) => {
+    const fields = ctx.request.body
+    const file = ctx.request.files
 
-    form.uploadDir = path.join(process.cwd(), config.upload.path)
-    form.parse(req, (err, fields, files) => {
-        if (err) {
-            return cb({ msg: 'Возникла ошибка при загрузке данных' }, null)
+    const isValid = validete(fields, file)
+
+    if (isValid.error) {
+        fs.unlinkSync(file.photo.path)
+
+        return isValid
+    }
+
+    try {
+        fs.renameSync(file.photo.path,
+            path.join(config.upload.path, file.photo.name))
+
+        const data = {
+            src: `./${config.upload.file}/${file.photo.name}`,
+            name: fields.name,
+            price: fields.price
         }
 
-        const isValid = validete(fields, files)
+        db.get('products')
+            .push(data)
+            .write()
 
-        if (isValid.error) {
-            fs.unlinkSync(files.photo.path)
-
-            return cb({ msg: isValid.mes }, null)
-        }
-
-        fs.rename(files.photo.path, path.join(config.upload.path, files.photo.name), (error) => {
-            if (error) {
-                return cb({ msg: 'Возникла ошибка при загрузке изображения' }, null);
-            }
-
-            const data = {
-                src: `./${config.upload.file}/${files.photo.name}`,
-                name: fields.name,
-                price: fields.price
-            }
-
-            db.get('products')
-                .push(data)
-                .write()
-
-            return cb(null, 'Продукт успешно загружен')
-        })
-    })
+        return isValid
+    } catch (error) {
+        return { mes: 'При загрузке картинки произошла ошибка', error: true }
+    }
 }

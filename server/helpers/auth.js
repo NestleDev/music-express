@@ -2,19 +2,17 @@ const crypto = require('crypto');
 const db = require('../model/db');
 
 module.exports = {
-    authorization: (login, cb) => {
+    authorization: (login) => {
         const user = db.get('user').value()
+        const hash = crypto.pbkdf2Sync(login.password, user.salt, 1000, 512, 'sha512')
+            .toString('hex')
 
-        crypto.pbkdf2(login.password, user.salt, 1000, 512, 'sha512', (err, hash) => {
-            if (err) {
-                return cb({ msg: 'Возникла ошибка, попробуйте еще!' }, false)
-            }
-
-            cb(null, {
+        if (hash) {
+            return {
                 login: user.email,
-                password: hash.toString('hex') === user.hash
-            })
-        })
+                password: hash === user.hash
+            }
+        }
     },
     setLogin: (login) => {
         const salt = crypto.randomBytes(16).toString('hex')

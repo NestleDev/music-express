@@ -1,9 +1,9 @@
-const express = require('express')
+const Router = require('koa-router');
+const body = require('koa-body');
+const router = new Router()
 const controller = require('../controller/index')
 
-const router = express.Router()
-
 router.get('/', controller.getIndex)
-router.post('/', controller.postFormData)
+router.post('/', body(), controller.postFormData)
 
 module.exports = router
