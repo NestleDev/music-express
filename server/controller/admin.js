@@ -1,4 +1,4 @@
-const uploadas = require('../helpers/upload')
+const uploadas = require('../libs/upload')
 const db = require('../model/db')
 
 module.exports = {
@@ -37,7 +37,7 @@ module.exports = {
     upload: (req, res) => {
         uploadas(req, res, (err, msg) => {
             if (err) {
-                req.flash('err', err.msg)
+                req.flash('err', err.message)
 
                 return res.redirect('/admin')
             }

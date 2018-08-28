@@ -1,4 +1,4 @@
-const auth = require('../helpers/auth')
+const auth = require('../libs/auth')
 
 module.exports = {
     getLogin: (req, res) => {
@@ -20,7 +20,7 @@ module.exports = {
 
         auth.authorization(login, (err, status) => {
             if (err) {
-                req.flash('login', err.msg)
+                req.flash('login', err.message)
 
                 return res.redirect('/login')
             }
@@ -29,7 +29,7 @@ module.exports = {
                 req.session.auth = status.password
                 res.redirect('/admin')
             } else {
-                req.flash('login', 'Пароль или логин не вырны!')
+                req.flash('login', 'Пароль или логин не верны!')
 
                 return res.redirect('/login')
             }

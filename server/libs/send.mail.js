@@ -12,9 +12,9 @@ module.exports = (config, data, cb) => {
 
     transporter.sendMail(mailOptions, (error) => {
         if (error) {
-            return cb({ message: "Cообщение не отправлено :(", status: 500 })
+            return cb(new Error('Cообщение не отправлено :('), null)
         }
 
-        cb(null, { message: "Cообщение отправлено :)", status: 200 })
+        cb(null, "Cообщение отправлено :)")
     })
 }

@@ -7,7 +7,7 @@ module.exports = {
 
         crypto.pbkdf2(login.password, user.salt, 1000, 512, 'sha512', (err, hash) => {
             if (err) {
-                return cb({ msg: 'Возникла ошибка, попробуйте еще!' }, false)
+                return cb(new Error('Возникла ошибка, попробуйте еще!'), null)
             }
 
             cb(null, {

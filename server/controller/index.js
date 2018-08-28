@@ -1,6 +1,6 @@
 const db = require('../model/db')
 const config = require('../config')
-const sendMail = require('../helpers/send.mail')
+const sendMail = require('../libs/send.mail')
 
 module.exports = {
     getIndex: (req, res) => {
@@ -20,7 +20,7 @@ module.exports = {
                     return res.redirect('/#status')
                 }
 
-                req.flash('info', info.message)
+                req.flash('info', info)
                 res.redirect('/#status')
             })
         } else {
