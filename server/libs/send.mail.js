@@ -13,10 +13,10 @@ module.exports = (config, data) => {
 
         transporter.sendMail(mailOptions, (error) => {
             if (error) {
-                reject({ message: "Cообщение не отправлено :(", status: 500 })
+                reject(new Error('Cообщение не отправлено!'))
             }
 
-            resolve({ message: "Cообщение отправлено :)", status: 200 })
+            resolve({ error: null, msg: 'Сообщение отправлено!' })
         })
     })
 }

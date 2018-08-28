@@ -69,19 +69,19 @@
       "price": 1000
     },
     {
-      "src": "./upload/js.png",
-      "name": "node.js",
+      "src": "./upload/oboi-dlya-rabochego-stola-gory-rechka.jpg",
+      "name": "Alex",
       "price": "3333333"
     },
     {
       "src": "./upload/oboi-rabochij-stol-kosmos-vysokogo-kachestva.jpg",
-      "name": "space",
+      "name": "Alex",
       "price": "444"
     },
     {
-      "src": "./upload/oboi-dlya-rabochego-stola-gory-rechka.jpg",
-      "name": "nice",
-      "price": "1000"
+      "src": "./upload/OCCmXgXB0bY.jpg",
+      "name": "Alex333333",
+      "price": "009"
     }
   ],
   "user": {

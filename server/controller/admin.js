@@ -1,4 +1,4 @@
-const uploadas = require('../helpers/upload')
+const uploadas = require('../libs/upload')
 const db = require('../model/db')
 
 module.exports = {
@@ -35,15 +35,15 @@ module.exports = {
         ctx.redirect('/admin')
     },
     upload: async (ctx, next) => {
-        const status = uploadas(ctx)
+        const error = uploadas(ctx)
 
-        if (status.error) {
-            ctx.flash('err', status.mes)
+        if (error) {
+            ctx.flash('err', error.message)
 
             return ctx.redirect('/admin')
         }
 
-        ctx.flash('data', status.mes)
+        ctx.flash('data', 'Проект загружен!!!!')
         ctx.redirect('/admin')
     }
 }

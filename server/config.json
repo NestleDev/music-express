@@ -1,17 +1,12 @@
 {
     "port": 8080,
     "views": "views",
-    "public": "public",
-    "routes": {
-        "index": "./routes/index",
-        "admin": "./routes/admin",
-        "login": "./routes/login"
-    },
+    "public": "server/public",
     "db": {
         "file": "db.json"
     },
     "upload": {
-        "path": "public/upload",
+        "path": "server/public/upload",
         "file": "upload"
     },
     "mail": {

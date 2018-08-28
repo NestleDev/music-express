@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const validete = require('../helpers/validete')
+const validete = require('../libs/validete')
 const db = require('../model/db')
 const config = require('../config.json')
 
@@ -13,7 +13,7 @@ module.exports = (ctx) => {
     if (isValid.error) {
         fs.unlinkSync(file.photo.path)
 
-        return isValid
+        return isValid.error
     }
 
     try {
@@ -29,9 +29,7 @@ module.exports = (ctx) => {
         db.get('products')
             .push(data)
             .write()
-
-        return isValid
     } catch (error) {
-        return { mes: 'При загрузке картинки произошла ошибка', error: true }
+        return new Error('При загрузке картинки произошла ошибка')
     }
 }

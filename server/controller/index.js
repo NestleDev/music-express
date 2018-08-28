@@ -1,6 +1,6 @@
 const db = require('../model/db')
 const config = require('../config')
-const sendMail = require('../helpers/send.mail')
+const sendMail = require('../libs/send.mail')
 module.exports = {
     getIndex: async (ctx, next) => {
         const data = {
@@ -18,8 +18,7 @@ module.exports = {
             try {
                 const status = await sendMail(config, body)
 
-                console.log(status)
-                ctx.flash('info', status.message)
+                ctx.flash('info', status.msg)
                 ctx.redirect('/#status')
 
             } catch (error) {

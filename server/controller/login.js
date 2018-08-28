@@ -1,4 +1,4 @@
-const auth = require('../helpers/auth')
+const auth = require('../libs/auth')
 
 module.exports = {
     getLogin: async (ctx, next) => {
