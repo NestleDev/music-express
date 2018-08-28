@@ -3,7 +3,7 @@
 
 >Для запуска:
 
-0. git clone https://krabaton@bitbucket.org/krabaton/nodejs-hw34.git
+0. git clone https://github.com/NestleDev/music-express.git
 1. npm i (yarn)
 2. npm start
 
